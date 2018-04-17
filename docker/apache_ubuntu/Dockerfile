@@ -1,4 +1,4 @@
-FROM ssh:dockerfile
+FROM sshd:dockerfile
 MAINTAINER by F911
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -7,7 +7,7 @@ RUN apt-get -yq install apache2 && \
     rm -rf /var/lib/lists/*
 
 RUN echo "Asia/Shanghai" > /etc/timezone && \
-    dpkg-reconfigure -f noninteractive
+    dpkg-reconfigure -f noninteractive tzdata
 
 ADD run.sh /run.sh
 RUN chmod 755 /run.sh
@@ -32,9 +32,10 @@ ENV APACHE_SERVERNAME   localhost
 ENV APACHE_SERVERALIAS  docker.localhost
 ENV APACHE_DOCUMENTROOT /var/www
 
+EXPOSE 22
 EXPOSE 80
 WORKDIR /app
 CMD ["/run.sh"]
-;;
+
 # vi;m:cin:ai:et:ts=4:sw=4:tw=98:ft=dockerfile:ff=unix:fenc=utf-8:
 # EOF
